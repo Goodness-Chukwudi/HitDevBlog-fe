@@ -30,6 +30,15 @@
 }
 .author-section {
   font-size: small;
-  display: flex;
+  /* display: flex; */
   margin-top: 2rem;
+}
+.title-div {
+  height: 60%;
+}
+
+.login {
+  width: 40%;
+  height: 400px;
+  background-color: rgb(119, 89, 85);
 }
