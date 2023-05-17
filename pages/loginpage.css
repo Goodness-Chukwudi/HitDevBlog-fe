@@ -13,6 +13,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+   
     
     
 }
@@ -23,22 +24,14 @@
     position: relative;
     width: 400px;
     height: 480px;
-    background: #000;
-    box-shadow: 0 0 50px rgb(233, 0, 78);
+    background: #fff;
+    box-shadow: 0 0 50px rgb(145, 140, 142);
     border-radius: 20px;
     padding: 40px;
     overflow: hidden;
 }
 
-/* .wrapper:hover{
-    animation: animate 1s linear infinite;
-}
 
-@keyframes animate{
-    100% {
-        filter: hue-rotate(360deg);
-    }
-} */
 
 .form-wrapper{
     display: flex;
@@ -65,14 +58,14 @@
 
 h2{
     font-size: 30px;
-    color: #fff;
+    color: #000;
     text-align: center;
 }
 
 .input-group{
     position: relative;
     margin: 30px 0;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid #000;
 }
 
 .input-group label{
@@ -81,19 +74,21 @@ h2{
     left: 5px;
     transform: translateY(-50%);
     font-size: 16px;
-    color: #fff;
+    color: #000;
     transition: .2s;
 }
 
 .input-group input{
     width: 320px;
     height: 40px;
-    font-size: 16px;
-    color: #fff;
-    padding: 0 5px;
+    font-size: 12px;
+    color: #000;
+    padding-left: 5px;
     background: transparent;
     border: none;
     outline: none;
+    padding-top:15px ;
+    
 }
 
 .input-group input:focus ~ label,
@@ -107,27 +102,32 @@ h2{
 }
 
 .remember label{
-    color: #fff;
+    color: #000;
     font-size: 14px;
 }
 
 .remember label input{
-    accent-color: rgb(76, 0, 255);
+    accent-color: blue;
 }
 
 .mybtn{
     position: relative;
     width: 100%;
     height: 40px;
-    background:  rgb(233, 0, 78);
-    box-shadow:  rgb(233, 186, 202);
+    background:  rgb(76, 0, 255);
+   
     font-size: 16px;
     color: #000;
     font-weight: 500px;
     border-radius: 30px;
     border: none;
     outline: none;
+    transition: .2s;
+}
 
+.mybtn:hover{
+    background-color:  rgb(61, 6, 189) ;
+    box-shadow: 0 0 50px rgb(236, 234, 235);
 }
 
 .signup-link{
@@ -137,7 +137,7 @@ h2{
 }
 
 .signup-link p{
-    color: #fff;
+    color: #000;
 }
 
 .signup-link p a {
