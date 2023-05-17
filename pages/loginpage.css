@@ -62,7 +62,7 @@ h2{
 .input-group{
     position: relative;
     margin: 30px 0;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid #c1c1c1;
 }
 
 .input-group label{
@@ -88,9 +88,11 @@ h2{
     
 }
 
+
 .input-group input:focus ~ label,
 .input-group input:valid ~ label{
     top: 5px;
+    color: rgb(76, 0, 255);
 }
 
 .remember{
