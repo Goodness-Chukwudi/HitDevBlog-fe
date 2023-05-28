@@ -1,85 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog page</title>
+    <link rel="stylesheet" href="../assets/styles/style.css" />
+    <link rel="stylesheet" href="blogpg.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+  </head>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="../assets/styles/style.css">
-</head>
-
-<body>
+  <body class="">
     <nav class="navbar navbar-expand-lg bg-body-tertiary mb-5">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="#">Hit blog</a>
-              <a class="nav-link" href="#">About US</a>
-              <a class="nav-link" href="#">Contact Us</a>
-            </div>
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="#">Hit blog</a>
+            <a class="nav-link" href="#">About US</a>
+            <a class="nav-link" href="#">Contact Us</a>
+            <a class="nav-link" href="loginpage.html">Sign In</a>
           </div>
         </div>
-      </nav>
-
-    <div class="container">
-        <div class="row justify-content-evenly my-5 blog-intro">
-            <div class="col-4" >
-              <h1 class="text-center title-div mt-5">Title</h1>
-              <div class="d-flex flex-wrap flex-row">
-                  <img class="rounded-pill" width="50px" height="50px" src="https://media.istockphoto.com/id/1411155612/photo/side-profile-of-a-beautiful-young-black-woman-thinking-and-looking-powerful-standing-against.jpg?b=1&s=170667a&w=0&k=20&c=7nGKLQGEmD2SfTwDFqgcgU4GjyYuBkaM2trsKjvgHQQ=" alt="">
-                  <p class="ms-3">Author Name <br> Author Details</p>
-              </div>
-            </div>
-            <div class="col-4">
-              <img width="100%" height="200px" class="" src="https://mclaren.scene7.com/is/image/mclaren/DSC00052_6:crop-1x1?wid=1200&hei=1200" alt="">
-            </div>
-          </div>
-
-          <div>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi harum consequatur consectetur numquam. Veniam consequatur optio tempora fugiat inventore, suscipit magni quasi animi voluptates hic? Repellendus praesentium deserunt molestias ea?
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam sapiente maxime labore dolore fugit ex libero incidunt odit vero nemo, asperiores esse, magni dolor deleniti nostrum nulla quisquam consectetur ipsa?
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam vitae porro dolorem blanditiis voluptatem, tempore nulla deserunt soluta earum debitis perferendis sint magnam aliquid saepe. Doloribus excepturi neque voluptatibus eius!
-          </div>
+      </div>
+    </nav>
+    <div class="blog__container">
+      <div class="blog__field">
+        <div class="input__group">
+          <input type="text" name="" id="" required />
+          <span>Blog Title</span>
+        </div>
+        <div class="input__group">
+          <textarea
+            class="text__area"
+            cols="32"
+            rows="5"
+            placeholder="create blog...."
+            required
+          ></textarea>
+        </div>
+        <button id="btn">Add</button>
+      </div>
     </div>
-    <!-- <section class="container container-section">
-
-
-        <div class="row">
-            <div class="col-md-6 title-section">
-                <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum vitae veritatis dolores quas modi
-                    cupiditate, corporis.</h2>
-                <div class="author-section">
-                    <img class="profile-pic"
-                        src="https://media.istockphoto.com/id/1411155612/photo/side-profile-of-a-beautiful-young-black-woman-thinking-and-looking-powerful-standing-against.jpg?b=1&s=170667a&w=0&k=20&c=7nGKLQGEmD2SfTwDFqgcgU4GjyYuBkaM2trsKjvgHQQ=" />
-                    <div class="mx-4">
-                        <h6>Author's Name</h6>
-                        <p> CEO and CTO.</p>
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="col-md-6 image-section">
-                <img src="https://mclaren.scene7.com/is/image/mclaren/DSC00052_6:crop-1x1?wid=1200&hei=1200"
-                    alt="Picture of a red car" />
-            </div>
-        </div>
-    </section>
-    <section class="container mt-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat voluptatem
-        asperiores
-        nobis qui
-        excepturi non quidem quis aperiam nostrum, nulla tenetur laboriosam autem enim reprehenderit ratione
-        modi corrupti atque quibusdam et earum sint at tempore. Quidem iste necessitatibus modi, ab, esse
-        quo, sint dolores ea veniam doloremque animi nesciunt voluptate!</section> -->
-</body>
-
+  </body>
 </html>
