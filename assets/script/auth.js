@@ -45,7 +45,7 @@ function createUser (e) {
         const usersString = JSON.stringify(existUsers);
         localStorage.setItem("blog-users", usersString);
     
-        window.location.replace("http://127.0.0.1:5501/pages/landing_page/index.html");
+        window.location.replace("http://127.0.0.1:5501/pages/index.html");
     }
 }
 
