@@ -34,5 +34,5 @@ function logOutUser () {
 function authGuard() {
     //Auth guard for protected pages
     const loggedInUser = localStorage.getItem("logged-in-user");
-    if (!loggedInUser)   window.location.replace("http://127.0.0.1:5501/pages/login.html");
+    if (!loggedInUser)   window.location.replace("http://127.0.0.1:5500/pages/login.html");
 }
