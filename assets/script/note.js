@@ -26,20 +26,27 @@ const addModal = document.querySelector("#note__query");
 const notes = document.querySelector("#notes");
 const form = addModal.children[0];
 const themeContainer = document.querySelector("#theme-container");
+let themeValue = themes[0];
 
-const themeElement = document.querySelectorAll(".theme");
+const themeElement = document.querySelectorAll(".theme-container .theme");
 
-console.log(themeElement)
+
 
 themeElement.forEach(ele => {
-    console.log(ele)
     ele.addEventListener("click", (e)=> {
-        if (ele == e.currentTarget) {
-            console.log(e.currentTarget)
-            ele.classlist.add("active")
-        } else {
-            ele.classlist.remove("active")
-        }
+        const colorSwatch = e.currentTarget;
+        themeElement.forEach((ele, i) => {
+            if (ele !== colorSwatch) {
+                ele.classList.remove("active")
+            }
+            if (ele == colorSwatch) {
+                colorSwatch.classList.add("active");
+                themeValue = themes[i];
+
+            }
+
+             
+        })
     })
 })
 
@@ -47,9 +54,11 @@ form.addEventListener("submit", (e)=> {
     e.preventDefault();
     const date = new Date;
     
-    const title = document.querySelector("#title").value;
+    let title = document.querySelector("#title").value;
     
     const newNote = document.createElement("article");
+    newNote.classList.add(themeValue)
+    
 
     const format = `<h4><img src="../assets/images/filled-star.svg" alt="star" class="star">${title}</h4>
     <div class="info">
@@ -58,7 +67,10 @@ form.addEventListener("submit", (e)=> {
     </div>`
     newNote.innerHTML = format;
     notes.append(newNote);
-    noNote.style.display = "none"
+    noNote.style.display = "none";
+    document.querySelector("#title").value = "";
+    document.querySelector("#content").value = "";
+    addModal.style.animation = "closeModal .6s ease forwards";
 })
 
 addBtn.addEventListener("click", ()=> {

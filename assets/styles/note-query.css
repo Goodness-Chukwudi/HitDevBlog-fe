@@ -69,6 +69,7 @@
     -webkit-appearance: none;
     border: 0;
     appearance: none;
+    user-select: none;
 }
 
 .note__query button {
