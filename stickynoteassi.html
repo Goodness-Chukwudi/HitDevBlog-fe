@@ -32,60 +32,84 @@
     
         <nav class="navbar sticky-top navbar-warning bg-warning">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">STICKYNOTE</a>
+              <a class="navbar-brand text-light fw-bold fs-4" href="#">STICKYNOTE</a>
+            </a></span> <span class="lol"><a class="text-white" href="https://www.instagram.com"><img class="imgicon" src="stack-of-books.png">
+            </a></span>
             </div>
           </nav>
 
           <style>
             .sticky-note {
-              position: sticky;
+              position: relative;
               top: 20px;
-              padding: 20px;
-              background-color: orange;
+              padding: 10px;
+              background-color: white;
               border: 1px solid #ced4da;
               border-radius: 5px;
+              width: 400px;
+              height: 150px;
             }
              #input-2b {
-                width: 460px;
                 height: 60px;
-                background-color: gold;
+                background-color: white;
                 border-radius: 10px;
                 border: none;
                 margin-top: 7px;
                 /* font-style: italic; */
-                outline: none;
+                /* outline: none; */
+                width: 350px ;
+                height: 90px ;
     
              }
 
             #input-1b{
-                width: 440px;
+                width: 350px;
                 height: 30px;
-                background-color: gold;
-                border-radius: 6px;
+                background-color: white;
+                border-radius: 2px;
                 border: none;
-                text-align: center;
                 /* font-style: italic; */
-                outline: none;
+                /* outline: none; */
+
             }
             
             button{
                 border: none;
                 margin-top: 9px;
-                background-color: orange;
+                background-color: yellow;
+                border-radius: 50px;
+                color: white;
+                position: absolute;
+                top: 125px;
+                right: 0.5%; 
+                transform:translateX(-50%);
+                margin-top: 10px;
+                 /* width: 20px;
+                 height: 10px; */
+                 /* border: 3px solid #73AD21; */
+
             }
+            body{
+                background-color: black;
+            }
+
+            img{
+                width: 80px;
+            }
+
           </style>
         
 
         
-          <div class="container mt-5"> <div class="row">
+          <div class="container mt-2"> <div class="row">
               <div class="col-md-6 offset-md-3">
                 <div class="sticky-note">
-                  <h4 class="mb-3">Sticky Note</h4>
+                  <!-- <h4 class="mb-3">Sticky Note</h4> -->
                   <!-- <div class="input-group"> -->
                     <input id="input-1b" type="text" placeholder="Tittle"/>
                      
                      
-                     <input id="input-2b" type="text" placeholder="Text"/>
+                     <input id="input-2b" type="text" placeholder="Enter note here"/>
                      <span><button type="button" onclick=addText()>Add note</button></span>
                      <span><button type="button" onclick="deleteText()">Delete</button></span>
                      <span><button type="button" onclick="italicizeText()"><em>Italicize</em></button></span>
