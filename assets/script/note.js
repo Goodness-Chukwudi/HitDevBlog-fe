@@ -14,17 +14,22 @@ const months = [
 ];
 
 const themes = ["first", "second", "third", "fourth", "fifth"];
-const noNote = document.querySelector(".no__notes");
-const addBtn = document.querySelector("#add__btn");
+
 const addModal = document.querySelector("#note__query");
-const notes = document.querySelector("#notes");
+const title = document.querySelector("#title");
+const content = document.querySelector("#content");
 const form = addModal.children[0];
 const themeContainer = document.querySelector("#theme-container");
+const formBtn = document.querySelector("#note__query button");
+
+
+const noNote = document.querySelector(".no__notes");
+const addBtn = document.querySelector("#add__btn");
+const notes = document.querySelector("#notes");
+const themeElement = themeContainer.querySelectorAll(".theme");
+
+
 let themeValue = themes[0];
-const themeElement = document.querySelectorAll(".theme-container .theme");
-const formBtn = document.querySelector("#note__query button")
-
-
 const themeLabel = document.querySelector("#theme__label");
 let isEditing = false;
 let editID = 0;
@@ -43,18 +48,15 @@ function makeFavourite(e) {
 function openEditingModal(e) {
 	isEditing = true;
 	const note = e.currentTarget.parentElement.parentElement;
-	const title = document.querySelector("#title");
-	const content = document.querySelector("#content");
+
     
     formBtn.textContent = "Edit";
-	console.log(note.children);
 	title.value = note.children[0].textContent;
 	content.value = "something we wrote before";
 	editID = note.dataset.id;
 	editingElement = note;
-	const themeLabel = document.querySelector("#theme__label");
-	const themeContainer = document.querySelector("#theme-container");
-	themeLabel.style.display = "none";
+
+	document.querySelector("#theme__label").style.display = "none";
 	themeContainer.style.display = "none";
 	addModal.style.animation = "closeModal .6s ease reverse forwards";
 }
@@ -78,7 +80,6 @@ function makeNote(e) {
 	const date = new Date();
     console.log("making a note")
 
-	const title = document.querySelector("#title");
 
 	const newNote = document.createElement("article");
 	newNote.classList.add(themeValue);
@@ -100,7 +101,7 @@ function makeNote(e) {
 
 	noNote.style.display = "none";
 	title.value = "";
-	document.querySelector("#content").value = "";
+	content.value = "";
 	addModal.style.animation = "closeModal .6s ease forwards"; //needs to be worked on
 	const starBtn = newNote.querySelector("#star");
 	const penBtn = newNote.querySelector("#pen");
@@ -132,7 +133,7 @@ addBtn.addEventListener("click", () => {
     formBtn.textContent = "Add";
     themeLabel.style.display = "block";
 	themeContainer.style.display = "flex";
-	addModal.style.animation = "closeModal .6s ease reverse forwards";
+	addModal.style.animation = "closeModal .3s ease reverse forwards";
 });
 
 addModal.addEventListener("click", (e) => {
@@ -141,7 +142,7 @@ addModal.addEventListener("click", (e) => {
         formBtn.textContent = "Edit";
 		themeLabel.style.display = "block";
 		themeContainer.style.display = "flex";
-		addModal.style.animation = "closeModal .6s ease forwards";
+		addModal.style.animation = "closeModal .3s ease forwards";
         isEditing = false;
 	}
 });
