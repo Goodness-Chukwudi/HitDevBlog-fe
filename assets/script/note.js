@@ -22,7 +22,15 @@ const form = addModal.children[0];
 const themeContainer = document.querySelector("#theme-container");
 let themeValue = themes[0];
 const themeElement = document.querySelectorAll(".theme-container .theme");
+const formBtn = document.querySelector("#note__query button")
+
+
+const themeLabel = document.querySelector("#theme__label");
 let isEditing = false;
+let editID = 0;
+let editingElement = Element;
+
+function setToDefault() {}
 
 function makeFavourite(e) {
 	const ele = e.currentTarget;
@@ -32,23 +40,23 @@ function makeFavourite(e) {
 	ele.src = ele.src == notFavourite ? favourite : notFavourite;
 }
 
-function editNote(e) {
-    isEditing = true;
-    const note = e.currentTarget.parentElement.parentElement;
-    const title = document.querySelector("#title");
+function openEditingModal(e) {
+	isEditing = true;
+	const note = e.currentTarget.parentElement.parentElement;
+	const title = document.querySelector("#title");
 	const content = document.querySelector("#content");
-    console.log(note.children)
-    title.value = note.children[0].textContent;
-    content.value = "something we wrote before";
-    const themeLabel = document.querySelector("#theme__label");
-    const themeContainer = document.querySelector("#theme-container");
-    themeLabel.style.display = "none";
-    themeContainer.style.display = "none";
-
     
-
-
-    addModal.style.animation = "closeModal .6s ease reverse forwards";
+    formBtn.textContent = "Edit";
+	console.log(note.children);
+	title.value = note.children[0].textContent;
+	content.value = "something we wrote before";
+	editID = note.dataset.id;
+	editingElement = note;
+	const themeLabel = document.querySelector("#theme__label");
+	const themeContainer = document.querySelector("#theme-container");
+	themeLabel.style.display = "none";
+	themeContainer.style.display = "none";
+	addModal.style.animation = "closeModal .6s ease reverse forwards";
 }
 
 themeElement.forEach((ele) => {
@@ -66,17 +74,19 @@ themeElement.forEach((ele) => {
 	});
 });
 
-
 function makeNote(e) {
-	e.preventDefault();
 	const date = new Date();
+    console.log("making a note")
 
-	let title = document.querySelector("#title");
+	const title = document.querySelector("#title");
 
 	const newNote = document.createElement("article");
 	newNote.classList.add(themeValue);
+	newNote.dataset.id = new Date().getTime().toString();
 
-	const format = `<h4><img id="star" src="../assets/images/unfilled-star.svg" alt="star" class="star">${title.value}</h4>
+	const format = `<h4><img id="star" src="../assets/images/unfilled-star.svg" alt="star" class="star">${
+		title.value
+	}</h4>
     <div class="info">
         <span>${
 			months[date.getMonth()]
@@ -85,6 +95,9 @@ function makeNote(e) {
     </div>`;
 	newNote.innerHTML = format;
 	notes.append(newNote);
+	themeLabel.style.display = "block";
+    themeContainer.style.display = "flex";
+
 	noNote.style.display = "none";
 	title.value = "";
 	document.querySelector("#content").value = "";
@@ -92,27 +105,43 @@ function makeNote(e) {
 	const starBtn = newNote.querySelector("#star");
 	const penBtn = newNote.querySelector("#pen");
 	starBtn.addEventListener("click", makeFavourite);
-    penBtn.addEventListener("click", editNote)
-};
+	penBtn.addEventListener("click", openEditingModal);
+}
+
+function editNote () {
+	const title = document.querySelector("#title");
+	const starImg = editingElement.querySelector("#star");
+    console.log("editing note")
+    editingElement.querySelector("h4").innerHTML = `${title.value}<img id="star" src="${starImg.src}" alt="star" class="star">`;
+    editingElement.querySelector("#star").addEventListener("click", makeFavourite);
+	document.querySelector("#content").value = "";
+	addModal.style.animation = "closeModal .6s ease forwards";  //needs to be worked on
+	isEditing = false;
+}
 
 form.addEventListener("submit", (e) => {
-    if (isEditing) {
-        editNote(e);
-    } else {
-        makeNote(e)
-    }
-})
+	e.preventDefault();
+	if (isEditing) {
+		editNote();
+	} else {
+		makeNote(e);
+	}
+});
 
 addBtn.addEventListener("click", () => {
+    formBtn.textContent = "Add";
+    themeLabel.style.display = "block";
+	themeContainer.style.display = "flex";
 	addModal.style.animation = "closeModal .6s ease reverse forwards";
 });
 
 addModal.addEventListener("click", (e) => {
 	if (!e.target.closest("form")) {
-        const themeLabel = document.querySelector("#theme__label");
-        const themeContainer = document.querySelector("#theme-container");
-        themeLabel.style.display = "block";
-        themeContainer.style.display = "flex";
+        const formBtn = document.querySelector("#note__query button")
+        formBtn.textContent = "Edit";
+		themeLabel.style.display = "block";
+		themeContainer.style.display = "flex";
 		addModal.style.animation = "closeModal .6s ease forwards";
+        isEditing = false;
 	}
 });
