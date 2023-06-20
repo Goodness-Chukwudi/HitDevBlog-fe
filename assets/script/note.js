@@ -15,12 +15,13 @@ const months = [
 
 const themes = ["first", "second", "third", "fourth", "fifth"];
 
-const addModal = document.querySelector("#note__query");
-const title = document.querySelector("#title");
-const content = document.querySelector("#content");
-const form = addModal.children[0];
-const themeContainer = document.querySelector("#theme-container");
-const formBtn = document.querySelector("#note__query button");
+const modalCover = document.querySelector("#note__query");
+const form = modalCover.firstElementChild;
+const title = form.querySelector("#title");
+const content = form.querySelector("#content");
+const themeContainer = form.querySelector("#theme-container");
+const formBtn = form.querySelector("button");
+const themeLabel = form.querySelector("#theme__label");
 
 
 const noNote = document.querySelector(".no__notes");
@@ -30,12 +31,27 @@ const themeElement = themeContainer.querySelectorAll(".theme");
 
 
 let themeValue = themes[0];
-const themeLabel = document.querySelector("#theme__label");
 let isEditing = false;
 let editID = 0;
 let editingElement = Element;
 
-function setToDefault() {}
+function resetToDefault() {
+	title.value = "";
+	content.value = "";
+	isEditing = false;
+	editingElement = Element;
+};
+
+function setModalElement() {
+	themeLabel.style.display = isEditing? "none" : "block";
+	themeContainer.style.display = isEditing? "none" : "flex";
+	formBtn.textContent = isEditing? "Edit" : "Add"
+};
+
+function toggleModalVisibility() {
+	const animationName = modalCover.style.animationName;
+	modalCover.style.animation = `${animationName == "openModal" ? "closeModal" : "openModal"} .4s ease forwards`;
+};
 
 function makeFavourite(e) {
 	const ele = e.currentTarget;
@@ -43,81 +59,70 @@ function makeFavourite(e) {
 	const favourite = `${origin}/assets/images/filled-star.svg`;
 	const notFavourite = `${origin}/assets/images/unfilled-star.svg`;
 	ele.src = ele.src == notFavourite ? favourite : notFavourite;
-}
+};
 
 function openEditingModal(e) {
 	isEditing = true;
-	const note = e.currentTarget.parentElement.parentElement;
-
-    
-    formBtn.textContent = "Edit";
-	title.value = note.children[0].textContent;
+    setModalElement();
+	editingElement = e.currentTarget.parentElement.parentElement;
+	title.value = editingElement.children[0].textContent;
 	content.value = "something we wrote before";
-	editID = note.dataset.id;
-	editingElement = note;
-
-	document.querySelector("#theme__label").style.display = "none";
-	themeContainer.style.display = "none";
-	addModal.style.animation = "closeModal .6s ease reverse forwards";
-}
+	toggleModalVisibility();
+};
 
 themeElement.forEach((ele) => {
 	ele.addEventListener("click", (e) => {
-		const colorSwatch = e.currentTarget;
+		const selectedColorSwatch = e.currentTarget;
 		themeElement.forEach((ele, i) => {
-			if (ele !== colorSwatch) {
+			if (ele !== selectedColorSwatch) {
 				ele.classList.remove("active");
 			}
-			if (ele == colorSwatch) {
-				colorSwatch.classList.add("active");
+			if (ele == selectedColorSwatch) {
+				selectedColorSwatch.classList.add("active");
 				themeValue = themes[i];
 			}
 		});
 	});
 });
 
-function makeNote(e) {
-	const date = new Date();
-    console.log("making a note")
-
-
+function createNoteElement(id, date) {
 	const newNote = document.createElement("article");
 	newNote.classList.add(themeValue);
-	newNote.dataset.id = new Date().getTime().toString();
-
-	const format = `<h4><img id="star" src="../assets/images/unfilled-star.svg" alt="star" class="star">${
-		title.value
-	}</h4>
-    <div class="info">
-        <span>${
-			months[date.getMonth()]
-		} ${date.getDate()}, ${date.getFullYear()}</span>
-        <img id="pen" class="pen" src="../assets/images/pen.svg" alt="">
-    </div>`;
+	newNote.dataset.id = id;
+	const format = `<h4><img id="star" src="../assets/images/	unfilled-star.svg" alt="star" class="star">${title.value}</h4><div class="info"><span>${date.month} ${date.day}, ${date.year}</span><img id="pen" class="pen" src="../assets/images/pen.svg" alt=""></div>`;
 	newNote.innerHTML = format;
+	// newNote.dataset.id = id;
 	notes.append(newNote);
-	themeLabel.style.display = "block";
-    themeContainer.style.display = "flex";
-
-	noNote.style.display = "none";
-	title.value = "";
-	content.value = "";
-	addModal.style.animation = "closeModal .6s ease forwards"; //needs to be worked on
 	const starBtn = newNote.querySelector("#star");
 	const penBtn = newNote.querySelector("#pen");
 	starBtn.addEventListener("click", makeFavourite);
 	penBtn.addEventListener("click", openEditingModal);
 }
 
-function editNote () {
-	const title = document.querySelector("#title");
+function addNoteElement() {
+	const date = new Date;
+	const id = date.getTime().toString(); //unique id
+	const dateCreated = {
+		day: date.getDate(),
+		month : months[date.getMonth()],
+		year: date.getFullYear(),
+	};
+	createNoteElement(id,dateCreated);
+	noNote.remove();
+	toggleModalVisibility();
+	setModalElement();
+	resetToDefault(); 
+}
+
+function editNote() {
+	toggleModalVisibility(); 
 	const starImg = editingElement.querySelector("#star");
+	const noteTitle = editingElement.querySelector("h4");
     console.log("editing note")
-    editingElement.querySelector("h4").innerHTML = `${title.value}<img id="star" src="${starImg.src}" alt="star" class="star">`;
+    noteTitle.innerHTML = `${title.value}<img id="star" src="${starImg.src}" alt="star" class="star">`;
     editingElement.querySelector("#star").addEventListener("click", makeFavourite);
-	document.querySelector("#content").value = "";
-	addModal.style.animation = "closeModal .6s ease forwards";  //needs to be worked on
-	isEditing = false;
+	content.value = "";
+	resetToDefault();
 }
 
 form.addEventListener("submit", (e) => {
@@ -125,24 +130,55 @@ form.addEventListener("submit", (e) => {
 	if (isEditing) {
 		editNote();
 	} else {
-		makeNote(e);
+		addNoteElement();
 	}
 });
 
 addBtn.addEventListener("click", () => {
-    formBtn.textContent = "Add";
-    themeLabel.style.display = "block";
-	themeContainer.style.display = "flex";
-	addModal.style.animation = "closeModal .3s ease reverse forwards";
+	setModalElement();
+	toggleModalVisibility();
 });
 
-addModal.addEventListener("click", (e) => {
+modalCover.addEventListener("click", (e) => {
 	if (!e.target.closest("form")) {
-        const formBtn = document.querySelector("#note__query button")
-        formBtn.textContent = "Edit";
-		themeLabel.style.display = "block";
-		themeContainer.style.display = "flex";
-		addModal.style.animation = "closeModal .3s ease forwards";
-        isEditing = false;
+		toggleModalVisibility();
+		setTimeout(()=> {
+			resetToDefault();
+			setModalElement();
+
+		}, 500)
 	}
 });
+
+
+//*********LOCALSTORAGE*********//
+const getLocalStorage = () => localStorage.getItem("notes") ? JSON.parse(localStorage.getItem("notes")): [];
+
+const addToLocalStorage = (id,value) => {
+    let groceries = {id : id, value : value};
+    let items = getLocalStorage();
+    items.push(groceries);
+    localStorage.setItem("notes", JSON.stringify(items));
+};
+
+const editLocalStorage = (id,value) => {
+    let items = getLocalStorage();
+    items = items.map(item => {
+        if (item.id === id) {
+            item.value = value;
+        }
+        return item;
+    });
+    localStorage.setItem("notes", JSON.stringify(items));
+};
+
+const removeFromLocalStorage = (id) =>{
+    let items = getLocalStorage();
+    items = items.filter(item =>{
+        if (item.id !== id) {
+            return item;
+        }
+    })
+    localStorage.setItem("notes", JSON.stringify(items));
+}
+

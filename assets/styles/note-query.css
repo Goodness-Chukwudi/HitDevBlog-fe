@@ -8,7 +8,6 @@
     justify-content: center;
     align-items: center;
     visibility: hidden;
-    /* animation: closeModal 1s ease forwards; */
 }
 
 
@@ -19,7 +18,9 @@
     background-color: white;
     padding: 1.5rem;
     border-radius: .8rem;
+    
 }
+
 
 .note__query label {
     font-size: 1rem;
@@ -103,6 +104,19 @@
 
 
 
+@keyframes showModal {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.03);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
 @keyframes closeModal {
     0% {
         visibility: visible;
@@ -115,5 +129,20 @@
     100% {
         visibility: hidden;
         opacity: 0;
+    }
+}
+
+@keyframes openModal {
+    0% {
+        visibility: hidden;
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+        visibility: visible;
+    }
+    100% {
+        visibility: visible;
+        opacity: 1;
     }
 }
