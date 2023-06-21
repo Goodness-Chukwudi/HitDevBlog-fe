@@ -59,6 +59,44 @@
 
 }
 
+.note__query .theme::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 1.9rem;
+    width: 1.9rem;
+    border-radius: 50%;
+    border: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    user-select: none;
+    background-color: #0d6efd;
+}
+
+.theme.first::before  {
+    background-color: #cccccc;
+    color: #333333;
+}
+
+.theme.second::before  {
+    background-color: #f19553ec;
+    color: #333333;
+}
+.theme.third::before  {
+    color: #ede6ff;
+    background-color: #ab7dd8;
+}
+.theme.fourth::before  {
+    background-color: #bde4f9;
+    color: #000080;
+}
+.theme.fifth::before  {
+    color: #2f4f4f;
+    background-color: #c3da83;
+}
+
 .note__query .theme::-webkit-color-swatch {
     position: absolute;
     top: 50%;
@@ -67,32 +105,66 @@
     height: 1.9rem;
     width: 1.9rem;
     border-radius: 50%;
-    -webkit-appearance: none;
     border: 0;
+    -webkit-appearance: none;
     appearance: none;
     user-select: none;
 }
 
-.note__query button {
+.note__query .btn__container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+.note__query .submit__btn {
     width: 7rem;
     height: 2.9rem;
     display: block;
     margin-left: auto;
-    margin-top: 1rem;
     background-color: #0d6efd;
     border: 0;
     font-weight: 600;
+    border-radius: .4rem;
     color: white;
     cursor: pointer;
 }
 
-.note__query button:hover{
+.note__query .submit__btn:hover{
     background-color: #0d6dfdbd;
 }
 
-.note__query button:active{
+.note__query .submit__btn:active{
     background-color: #0000ffc9;
 }
+
+.note__query .delete__btn {
+    background-image: url(../images/delete-gray.svg);
+    background-repeat: no-repeat;
+    background-position: center ;
+    background-size: 2rem ;
+    width: 4rem;
+    height: 2.9rem;
+    display: block;
+    background-color: #ffffff;
+    font-weight: 600;
+    color: white;
+    border: 1px solid gray;
+    border-radius: .4rem;
+    cursor: pointer;
+}
+
+.note__query .delete__btn:hover{
+    border: none;
+    background-image: url(../images/delete.svg);
+    background-color: #ff3939;
+}
+
+.note__query .delete__btn:active{
+    background-color: #fa5656ce;
+}
+
+
+
 .note__query textarea {
     resize: none;
     width: 100%;

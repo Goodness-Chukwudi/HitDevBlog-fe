@@ -76,20 +76,30 @@ main h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 2rem;
+    height: 2.2rem;
+    border-radius: .5rem;
     opacity: .5;
+    padding-left: 1rem;
 }
 
+.search__box:hover {
+    border: 2px solid gray;
+}
 
 .search__box  img {
     width: 1rem;
 }
 
 .search__box  input {
+    border-radius: .5rem;
     width: 13rem;
     height: 100%;
     text-indent: .5rem;
     border: 0;
+}
+
+.search__box input:focus {
+    outline: none;
 }
 
 .search__box  input::placeholder {
@@ -137,7 +147,6 @@ article.fifth {
     background-color: #c3da83;
 }
 article h4 {
-    /* text-align: justify; */
     font-weight: 400;
     height: 4em;
     font-size: 1.3rem;

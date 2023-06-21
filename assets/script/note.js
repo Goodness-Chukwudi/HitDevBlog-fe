@@ -15,60 +15,74 @@ const months = [
 
 const themes = ["first", "second", "third", "fourth", "fifth"];
 
+//*********FORM ELEMENT*********//
 const modalCover = document.querySelector("#note__query");
 const form = modalCover.firstElementChild;
 const title = form.querySelector("#title");
 const content = form.querySelector("#content");
 const themeContainer = form.querySelector("#theme-container");
-const formBtn = form.querySelector("button");
+const formBtn = form.querySelector(".submit__btn");
+const deleteBtn = form.querySelector(".delete__btn");
 const themeLabel = form.querySelector("#theme__label");
 
-
+//*********OTHER ELEMENTS*********//
 const noNote = document.querySelector(".no__notes");
+const searchBox = document.querySelector(".search__box input");
 const addBtn = document.querySelector("#add__btn");
 const notes = document.querySelector("#notes");
 const themeElement = themeContainer.querySelectorAll(".theme");
 
-
+//*********TARGET ELEMENT VALUES*********//
 let themeValue = themes[0];
 let isEditing = false;
-let editID = 0;
 let editingElement = Element;
+let notesArray = []
 
+//*********FUNCTIONS*********//
 function resetToDefault() {
 	title.value = "";
 	content.value = "";
 	isEditing = false;
 	editingElement = Element;
-};
+}
 
 function setModalElement() {
-	themeLabel.style.display = isEditing? "none" : "block";
-	themeContainer.style.display = isEditing? "none" : "flex";
-	formBtn.textContent = isEditing? "Edit" : "Add"
-};
+	themeLabel.style.display = isEditing ? "none" : "block";
+	themeContainer.style.display = isEditing ? "none" : "flex";
+	deleteBtn.style.display = isEditing ? "block" : "none";
+	formBtn.textContent = isEditing ? "Edit" : "Add";
+
+}
 
 function toggleModalVisibility() {
 	const animationName = modalCover.style.animationName;
-	modalCover.style.animation = `${animationName == "openModal" ? "closeModal" : "openModal"} .4s ease forwards`;
-};
+	modalCover.style.animation = `${
+		animationName == "openModal" ? "closeModal" : "openModal"
+	} .4s ease forwards`;
+}
 
 function makeFavourite(e) {
-	const ele = e.currentTarget;
+	const star = e.currentTarget;
+	editingElement = star.parentElement.parentElement;
 	const origin = window.location.origin;
 	const favourite = `${origin}/assets/images/filled-star.svg`;
 	const notFavourite = `${origin}/assets/images/unfilled-star.svg`;
-	ele.src = ele.src == notFavourite ? favourite : notFavourite;
-};
+	star.src = star.src == notFavourite ? favourite : notFavourite;
+	editLocalStorage(undefined, editingElement.dataset.id)
+}
 
 function openEditingModal(e) {
 	isEditing = true;
-    setModalElement();
+	let notes = getLocalStorage();
 	editingElement = e.currentTarget.parentElement.parentElement;
-	title.value = editingElement.children[0].textContent;
-	content.value = "something we wrote before";
+	const note = notes.filter(
+		(note) => note.date.id == editingElement.dataset.id
+	);
+	setModalElement();
+	title.value = note[0].value.title;
+	content.value = note[0].value.content;
 	toggleModalVisibility();
-};
+}
 
 themeElement.forEach((ele) => {
 	ele.addEventListener("click", (e) => {
@@ -85,13 +99,14 @@ themeElement.forEach((ele) => {
 	});
 });
 
-function createNoteElement(id, date) {
+function createNoteElement(note, date) {
 	const newNote = document.createElement("article");
-	newNote.classList.add(themeValue);
-	newNote.dataset.id = id;
-	const format = `<h4><img id="star" src="../assets/images/	unfilled-star.svg" alt="star" class="star">${title.value}</h4><div class="info"><span>${date.month} ${date.day}, ${date.year}</span><img id="pen" class="pen" src="../assets/images/pen.svg" alt=""></div>`;
+	newNote.classList.add(note.theme);
+	newNote.dataset.id = note.id;
+	const src = note.isFavorite ? "filled-star" : "unfilled-star";
+	const format = `<h4><img id="star" src="../assets/images/${src}.svg" alt="star" class="star">${note.title}</h4><div class="info"><span>${date.month} ${date.day}, ${date.year}</span><img id="pen" class="pen" src="../assets/images/pen.svg" alt=""></div>`;
 	newNote.innerHTML = format;
-	// newNote.dataset.id = id;
+	newNote.dataset.id = date.id;
 	notes.append(newNote);
 	const starBtn = newNote.querySelector("#star");
 	const penBtn = newNote.querySelector("#pen");
@@ -99,38 +114,83 @@ function createNoteElement(id, date) {
 	penBtn.addEventListener("click", openEditingModal);
 }
 
-function addNoteElement() {
-	const date = new Date;
-	const id = date.getTime().toString(); //unique id
+function addNoteElement(note) {
+	const date = new Date();
 	const dateCreated = {
+		id: date.getTime().toString(), //unique id
 		day: date.getDate(),
-		month : months[date.getMonth()],
+		month: months[date.getMonth()],
 		year: date.getFullYear(),
 	};
-	createNoteElement(id,dateCreated);
-	noNote.remove();
+	noNote.style.display = "none";
+	createNoteElement(note, dateCreated);
+	addToLocalStorage(note, dateCreated);
 	toggleModalVisibility();
 	setModalElement();
-	resetToDefault(); 
-}
-
-function editNote() {
-	toggleModalVisibility(); 
-	const starImg = editingElement.querySelector("#star");
-	const noteTitle = editingElement.querySelector("h4");
-    console.log("editing note")
-    noteTitle.innerHTML = `${title.value}<img id="star" src="${starImg.src}" alt="star" class="star">`;
-    editingElement.querySelector("#star").addEventListener("click", makeFavourite);
-	content.value = "";
 	resetToDefault();
 }
 
+function editNote(note) {
+	toggleModalVisibility();
+	const starImg = editingElement.querySelector("#star");
+	const noteTitle = editingElement.querySelector("h4");
+	const id = editingElement.dataset.id;
+	noteTitle.innerHTML = `${note.title}<img id="star" src="${starImg.src}" alt="star" class="star">`;
+	editingElement
+		.querySelector("#star")
+		.addEventListener("click", makeFavourite);
+	editLocalStorage(note, id);
+	resetToDefault();
+}
+
+function setStoredNotes() {
+    const notes = getLocalStorage();
+	notes.forEach(note => {
+		createNoteElement(note.value, note.date);
+	});
+	noNote.style.display = notes.length == 0 ? "block" : "none";
+}
+
+function deleteNote() {
+	noNote.style.display = getLocalStorage().length == 1? "block" : "none";
+	editingElement.remove();
+	removeFromLocalStorage(editingElement.dataset.id);
+	toggleModalVisibility();
+	setTimeout(() => {
+		resetToDefault();
+		setModalElement();
+	}, 500);
+
+}
+
+
+function getFilteredNotes(text) {
+	let notes = getLocalStorage();
+	notes = notes.filter(note => containsSubstring(note.value.title, text));
+	console.log(notes);
+	return notes;
+
+}
+
+function containsSubstring(mainString, substring) {
+	const pattern = new RegExp(substring, "i");
+	return pattern.test(mainString);
+}
+
+//*********ADDEVENTLISTENERS*********//
+
 form.addEventListener("submit", (e) => {
 	e.preventDefault();
+	const note = {
+		title: title.value,
+		content: content.value,
+		isFavorite: false,
+		theme: themeValue,
+	};
 	if (isEditing) {
-		editNote();
+		editNote(note);
 	} else {
-		addNoteElement();
+		addNoteElement(note);
 	}
 });
 
@@ -142,43 +202,46 @@ addBtn.addEventListener("click", () => {
 modalCover.addEventListener("click", (e) => {
 	if (!e.target.closest("form")) {
 		toggleModalVisibility();
-		setTimeout(()=> {
+		setTimeout(() => {
 			resetToDefault();
 			setModalElement();
-
-		}, 500)
+		}, 500);
 	}
 });
 
+searchBox.addEventListener("input", ()=> getFilteredNotes(searchBox.value));
+deleteBtn.addEventListener("click", deleteNote);
+window.addEventListener("DOMContentLoaded", setStoredNotes);
 
 //*********LOCALSTORAGE*********//
-const getLocalStorage = () => localStorage.getItem("notes") ? JSON.parse(localStorage.getItem("notes")): [];
+const getLocalStorage = () =>
+	localStorage.getItem("notes")
+		? JSON.parse(localStorage.getItem("notes"))
+		: [];
 
-const addToLocalStorage = (id,value) => {
-    let groceries = {id : id, value : value};
-    let items = getLocalStorage();
-    items.push(groceries);
-    localStorage.setItem("notes", JSON.stringify(items));
+const addToLocalStorage = (value, date) => {
+	let note = { value, date };
+	let notes = getLocalStorage();
+	notes.push(note);
+	localStorage.setItem("notes", JSON.stringify(notes));
 };
 
-const editLocalStorage = (id,value) => {
-    let items = getLocalStorage();
-    items = items.map(item => {
-        if (item.id === id) {
-            item.value = value;
-        }
-        return item;
-    });
-    localStorage.setItem("notes", JSON.stringify(items));
+const editLocalStorage = (value, id) => {
+	let notes = getLocalStorage();
+	notes = notes.map((note) => {
+		if (value == undefined && note.date.id === id) {
+			note.value.isFavorite = !note.value.isFavorite
+		} else if (value !== undefined && note.date.id === id) {
+			note.value.title = value.title;
+			note.value.content = value.content;
+		}
+		return note;
+	});
+	localStorage.setItem("notes", JSON.stringify(notes));
 };
 
-const removeFromLocalStorage = (id) =>{
-    let items = getLocalStorage();
-    items = items.filter(item =>{
-        if (item.id !== id) {
-            return item;
-        }
-    })
-    localStorage.setItem("notes", JSON.stringify(items));
-}
-
+const removeFromLocalStorage = (id) => {
+	let notes = getLocalStorage();
+	notes = notes.filter((note) => note.date.id !== id);
+	localStorage.setItem("notes", JSON.stringify(notes));
+};

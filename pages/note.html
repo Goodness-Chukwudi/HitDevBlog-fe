@@ -75,31 +75,11 @@
 					id="theme-container"
 					class="theme-container"
 				>
-					<input
-						class="theme active"
-						type="color"
-						value="#cccccc"
-					/>
-					<input
-						class="theme"
-						type="color"
-						value="#f19553"
-					/>
-					<input
-						class="theme"
-						type="color"
-						value="#ab7dd8"
-					/>
-					<input
-						class="theme"
-						type="color"
-						value="#bde4f9"
-					/>
-					<input
-						class="theme"
-						type="color"
-						value="#c3da83"
-					/>
+					<span class="theme first"></span>
+					<span class="theme second"></span>
+					<span class="theme third"></span>
+					<span class="theme fourth"></span>
+					<span class="theme fifth"></span>
 				</div>
 				<label for="content">Content :</label>
 				<textarea
@@ -107,7 +87,10 @@
 					id="content"
 					required
 				></textarea>
-				<button type="submit">Add</button>
+				<div class="btn__container">
+					<button type="button" class="delete__btn"></button>
+					<button type="submit" class="submit__btn">Add</button>
+				</div>
 			</form>
 		</section>
 		<script src="../assets/script/note.js"></script>
