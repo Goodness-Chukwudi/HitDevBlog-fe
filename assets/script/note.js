@@ -36,7 +36,6 @@ const themeElement = themeContainer.querySelectorAll(".theme");
 let themeValue = themes[0];
 let isEditing = false;
 let editingElement = Element;
-let notesArray = []
 
 //*********FUNCTIONS*********//
 function resetToDefault() {
@@ -141,7 +140,7 @@ function editNote(note) {
 		.addEventListener("click", makeFavourite);
 	editLocalStorage(note, id);
 	resetToDefault();
-}
+};
 
 function setStoredNotes() {
     const notes = getLocalStorage();
@@ -165,11 +164,12 @@ function deleteNote() {
 
 
 function getFilteredNotes(text) {
-	let notes = getLocalStorage();
-	notes = notes.filter(note => containsSubstring(note.value.title, text));
-	console.log(notes);
-	return notes;
-
+	let filteredNotes = getLocalStorage();
+	filteredNotes = filteredNotes.filter(note => containsSubstring(note.value.title, text));
+	notes.innerHTML = null;
+	filteredNotes.forEach(note => {
+		createNoteElement(note.value, note.date)
+	})
 }
 
 function containsSubstring(mainString, substring) {
