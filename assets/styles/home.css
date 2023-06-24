@@ -4,6 +4,47 @@
   height: 300px;
 }
 
+
+
+
+/*=========== Nav-Bar ========= */
+
+
+span{
+  color: crimson;
+}
+
+#navbarSupportedContent a:hover{
+  border-bottom: 2px solid crimson;
+  transform: translateY(2px);
+}
+
+
+
+
+
+#logged-in-user{
+  color: rgb(118, 114, 125);
+  margin-left: 34rem;
+  
+}
+
+
+
+
+/* ========== banner section ======== */
+
+.banner-container{
+  width: 100%;
+  background-color: rgb(20, 19, 19);
+}
+
+
+.blog-page-main{
+  margin-top: 50px;
+}
+
+
 .main-footer {
   height: 100px;
 }
