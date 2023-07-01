@@ -24,8 +24,8 @@ span{
 
 
 #logged-in-user{
-  color: rgb(118, 114, 125);
-  margin-left: 34rem;
+  color: #fff;
+  margin-left: 35rem;
   
 }
 
@@ -33,11 +33,6 @@ span{
 
 
 /* ========== banner section ======== */
-
-.banner-container{
-  width: 100%;
-  background-color: rgb(20, 19, 19);
-}
 
 
 .blog-page-main{
