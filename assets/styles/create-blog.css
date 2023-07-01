@@ -1,0 +1,9 @@
+.form-label {
+    font-size: 70%;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#blog-content {
+    max-height: 10rem;
+}
