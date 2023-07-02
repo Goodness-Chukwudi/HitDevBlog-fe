@@ -27,12 +27,14 @@ function checkLoggedInUser () {
 }
 
 function logOutUser () {
+    const {origin} = window.location;
     localStorage.removeItem("logged-in-user");
-    window.location.replace("http://127.0.0.1:5501/pages/login.html");
+    window.location.replace(`${origin}/pages/login.html`);
 }
 
 function authGuard() {
     //Auth guard for protected pages
+    const {origin} = window.location;
     const loggedInUser = localStorage.getItem("logged-in-user");
-    if (!loggedInUser)   window.location.replace("http://127.0.0.1:5500/pages/login.html");
+    if (!loggedInUser)   window.location.replace(`${origin}/pages/login.html`);
 }

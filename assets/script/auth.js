@@ -14,6 +14,7 @@ function createUser (e) {
     const name = document.getElementById("username").value;
     const password = document.getElementById("password").value;
     const email = document.getElementById("email").value;
+    const {origin} = window.location;
     
     const user = {
         name: name,
@@ -45,7 +46,7 @@ function createUser (e) {
         const usersString = JSON.stringify(existUsers);
         localStorage.setItem("blog-users", usersString);
     
-        window.location.replace("http://127.0.0.1:5500/pages/index.html");
+        window.location.replace(`${origin}/pages/index.html`);
     }
 }
 
@@ -53,6 +54,7 @@ function signIn(e) {
     e.preventDefault();
     const username = document.getElementById("username-login").value;
     const password = document.getElementById("password-login").value;
+    const {origin} = window.location;
 
     let user = null;
     const existUsers = JSON.parse(localStorage.getItem("blog-users")) || [];
@@ -70,7 +72,7 @@ function signIn(e) {
     } else {
         const loggedInUser = JSON.stringify(user);
         localStorage.setItem("logged-in-user", loggedInUser);
-        window.location.replace("http://127.0.0.1:5500/pages/index.html");
+        window.location.replace(`${origin}/pages/index.html`);
     }
 
 }
