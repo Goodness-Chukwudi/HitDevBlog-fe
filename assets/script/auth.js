@@ -45,7 +45,7 @@ function createUser (e) {
         const usersString = JSON.stringify(existUsers);
         localStorage.setItem("blog-users", usersString);
     
-        window.location.replace("http://127.0.0.1:5501/pages/index.html");
+        window.location.replace("http://127.0.0.1:5500/pages/index.html");
     }
 }
 
@@ -70,7 +70,7 @@ function signIn(e) {
     } else {
         const loggedInUser = JSON.stringify(user);
         localStorage.setItem("logged-in-user", loggedInUser);
-        window.location.replace("http://127.0.0.1:5501/pages/index.html");
+        window.location.replace("http://127.0.0.1:5500/pages/index.html");
     }
 
 }
