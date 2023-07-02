@@ -21,5 +21,13 @@ function addBlogParagraph (e) {
 function displayNewParagraphs () {
     let template = blogTemplates.join(" ");
     document.getElementById("blog-content").innerHTML = template;
+    const allBlogParagraphs = document.querySelectorAll("#blog-content p");
+    allBlogParagraphs.forEach(paragraph => paragraph.addEventListener("click", getParagraphText));
     textAreaElement.value = "";
+
+}
+
+function getParagraphText(e) {
+    const {id, textContent} = e.currentTarget;
+    console.log(id, textContent)
 }
