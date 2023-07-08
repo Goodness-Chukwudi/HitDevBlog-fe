@@ -64,3 +64,13 @@ function deleteParagraph (e) {
     console.log(id)
     displayParagraphs();
 }
+
+const cardTextElements = document.querySelectorAll('.card-text');
+
+cardTextElements.forEach((element) => {
+    const text = element.textContent;
+    if (text.length> 16) {
+        const truncatedText = text.substring(0, 16) + '...';
+        element.textContent = truncatedText;
+    }
+});
