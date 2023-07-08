@@ -68,3 +68,31 @@ function deleteParagraph (e) {
     console.log(id)
     displayParagraphs();
 }
+
+// setting maximum length of blog content chracters displayed on blog card 
+
+const paragraphs = document.querySelectorAll('.card-text');
+
+for (let i = 0; i < paragraphs.length; i++) {
+  const paragraph = paragraphs[i];
+  const text = paragraph.textContent.trim();
+
+  if (text.length > 25) {
+    const truncatedText = text.slice(0, 25) + '...';
+    paragraph.textContent = truncatedText;
+  }
+}
+
+// setting maximum length of blog title chracters displayed on blog card 
+
+const titles = document.querySelectorAll('.card-title');
+
+for (let i = 0; i < titles.length; i++) {
+  const title = titles[i];
+  const text = title.textContent.trim();
+
+  if (text.length > 16) {
+    const truncatedText = text.slice(0, 16) + '...';
+    title.textContent = truncatedText;
+  }
+}
