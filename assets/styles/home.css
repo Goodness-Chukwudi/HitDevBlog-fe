@@ -9,16 +9,18 @@
 
 /*=========== Nav-Bar ========= */
 
-
-span{
+.navbar-brand span{
   color: crimson;
 }
 
 #navbarSupportedContent a:hover {
   border-bottom: 2px solid crimson;
-  transform: translateY(2px);
+  border-bottom-width: 3px;
 }
 
+#active1{
+  background-color: #eee;
+}
 
 
 

@@ -69,7 +69,7 @@ function deleteParagraph (e) {
     displayParagraphs();
 }
 
-// setting maximum length of blog content chracters displayed on blog card 
+// setting maximum length for blog content chracters displayed on blog card 
 
 const paragraphs = document.querySelectorAll('.card-text');
 
@@ -83,7 +83,7 @@ for (let i = 0; i < paragraphs.length; i++) {
   }
 }
 
-// setting maximum length of blog title chracters displayed on blog card 
+// setting maximum length for blog title chracters displayed on blog card 
 
 const titles = document.querySelectorAll('.card-title');
 
