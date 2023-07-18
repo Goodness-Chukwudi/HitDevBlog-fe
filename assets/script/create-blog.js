@@ -12,7 +12,7 @@ function addEventListeners () {
 
 let isUpdate = false;
 let editId;
-let blogTemplates = {};
+let blogs = {};
 let paragraphCount = 0;
 const textAreaElement = document.getElementById("exampleFormControlTextarea1");
 
@@ -20,25 +20,30 @@ function displayBlogs (e) {
     const storageService = new StorageService();
     const loggedInUser = storageService.retrieve("logged-in-user");
 
-    const blogs = storageService.retrieve("blogs");
-    userBlogs = JSON.parse(blogs)[loggedInUser.email];
-    const blogCardsElement = document.getElementById("blog-cards");
-
-    let cardsTemplate = '';
-    userBlogs.forEach(blog => {
-
-        cardsTemplate += `
-        <div class="card me-1" style="width: 10rem; height: 15rem;">
-            <img src="../../assets/images/blog-image.jpeg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h6 class="card-title">${blog.title} <span style= "font-size: 60%" >${blog.date_created}</span></h6>
-                <p class="card-text">${blog.content}</p>
-                <a class=" btn btn-outline-primary btn-sm" href="./view-blog.html">view blog</a>
+    const storedBlogs = storageService.retrieve("blogs");
+    if (storedBlogs) {
+        userBlogs = storedBlogs[loggedInUser.email] || [];
+        const blogCardsElement = document.getElementById("blog-cards");
+    
+        let cardsTemplate = '';
+        userBlogs.forEach((blog, index) => {
+            let contents = "";
+            blog.content.forEach(content => {
+                contents += `<p class="card-text">${content}</p>`
+            })
+            cardsTemplate += `
+            <div class="card me-1" style="width: 10rem; height: 15rem;">
+                <img src="../../assets/images/blog-image.jpeg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h6 class="card-title">${blog.title} <span style= "font-size: 60%" >${blog.date_created}</span></h6>
+                    ${contents}
+                    <a class=" btn btn-outline-primary btn-sm" href="./view-blog.html?email=${loggedInUser.email}&index=${index}">view blog</a>
+                </div>
             </div>
-        </div>
-        `
-    })
-    blogCardsElement.innerHTML = cardsTemplate;
+            `
+        })
+        blogCardsElement.innerHTML = cardsTemplate;
+    }
 }
 
 function addBlogParagraph (e) {
@@ -48,17 +53,9 @@ function addBlogParagraph (e) {
     if (value) {
         if (!isUpdate) paragraphCount++;
         const id = isUpdate ? editId : paragraphCount;
-        const blogTemplate = `
-        <div class = "blog-paragraph row">
-            <div id = ${id}-value class="ps-3 col-md-8 col-10"> ${value}</div>
-            <div id = ${id} class = "col-md-4 col-2 text-end">
-                <span class= "edit-btn material-symbols-outlined ">edit</span>
-                <span class= "delete-btn material-symbols-outlined">delete</span>
-            </div>
-        </div>
-        `
-        blogTemplates[id] = blogTemplate;
+        blogs[id] = value;
         displayParagraphs();
+        isUpdate = false;
     }
 }
 
@@ -71,30 +68,44 @@ function createBlog (e) {
     const blog = {
         user: loggedInUser.name,
         title: title,
-        content: Object.values(blogTemplates).join(" "),
+        content: Object.values(blogs),
         date_created: new Date().toDateString()
     }
 
-    const blogs = storageService.retrieve("blogs") || {};
-    if (blogs[loggedInUser.email]) blogs[loggedInUser.email].push(blog)
-    else blogs[loggedInUser.email] = [blog];
+    const storedBlogs = storageService.retrieve("blogs") || {};
+    if (storedBlogs[loggedInUser.email]) storedBlogs[loggedInUser.email].push(blog)
+    else storedBlogs[loggedInUser.email] = [blog];
 
-    storageService.save("blogs", blogs);
+    storageService.save("blogs", storedBlogs);
+
 }
 
 function displayParagraphs () {
-    let template = Object.values(blogTemplates).join(" ");
+    
+    let template = "";
+    for (const id in blogs) {
+        template += `
+        <div class = "blog-paragraph row">
+            <div id = ${id}-value class="ps-3 col-md-8 col-10"> ${blogs[id]}</div>
+            <div id = ${id} class = "col-md-4 col-2 text-end">
+                <span class= "edit-btn material-symbols-outlined">edit</span>
+                <span class= "delete-btn material-symbols-outlined">delete</span>
+            </div>
+        </div>
+        `
+    }
     document.getElementById("blog-content").innerHTML = template;
     textAreaElement.value = "";
+
     //set a click event on the paragraph elements
-    const paragraphsToEdit = document.querySelectorAll(".edit-btn");
-    const paragraphsToDelete = document.querySelectorAll(".delete-btn");
-    paragraphsToEdit.forEach(paragraph => paragraph.addEventListener("click", editParagraph));
-    paragraphsToDelete.forEach(paragraph => paragraph.addEventListener("click", deleteParagraph));
+    const paragraphsEditBtn = document.querySelectorAll(".edit-btn");
+    const paragraphsDeleteBtn = document.querySelectorAll(".delete-btn");
+    paragraphsEditBtn.forEach(paragraph => paragraph.addEventListener("click", editParagraph));
+    paragraphsDeleteBtn.forEach(paragraph => paragraph.addEventListener("click", deleteParagraph));
 
     //enable or disable create blog button
     const title = document.getElementById("exampleFormControlInput1").value;
-    const isValidInput = title && Object.keys(blogTemplates).length > 0;
+    const isValidInput = title && Object.keys(blogs).length > 0;
     
     if (isValidInput) document.getElementById("create-blog-btn").className = "btn btn-sm rounded-circle btn-outline-secondary";
     else document.getElementById("create-blog-btn").className = "btn btn-sm rounded-circle btn-outline-secondary disabled";
@@ -110,6 +121,6 @@ function editParagraph(e) {
 
 function deleteParagraph (e) {
     const id = e.currentTarget.parentElement.id;
-    delete blogTemplates[id];
+    delete blogs[id];
     displayParagraphs();
 }
