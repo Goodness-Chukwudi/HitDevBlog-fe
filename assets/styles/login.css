@@ -25,9 +25,9 @@
     width: 380px;
     height: 480px;
     background: #fff;
-    box-shadow: inset -5px -5px rgb(248, 248, 248);
+    box-shadow: inset -5px -5px rgb(240, 233, 233);
     border-radius: 25px;
-    border: 1.6px solid rgb(229, 225, 225);
+    border: 1px solid #d3cbcb ;
     padding: 30px;
     overflow: hidden;
     margin: 40 1rem;

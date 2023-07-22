@@ -25,7 +25,9 @@ function displayBlogs(e) {
     if (storedBlogs) {
         userBlogs = storedBlogs[loggedInUser.email] || [];
         const blogCardsElement = document.getElementById("blog-cards");
-        // const homeBlogsEle = document.getElementById("homeblog-cards");
+        
+
+        
 
         let cardsTemplate = '';
         const maxTitleLength = 20; 
@@ -59,6 +61,7 @@ function displayBlogs(e) {
 
         })    
       blogCardsElement.innerHTML = cardsTemplate;
+    
       
     }
 }
