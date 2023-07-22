@@ -15,6 +15,58 @@ let editId;
 let blogs = {};
 let paragraphCount = 0;
 const textAreaElement = document.getElementById("exampleFormControlTextarea1");
+
+
+function displayBlogs(e) {
+    const storageService = new StorageService();
+    const loggedInUser = storageService.retrieve("logged-in-user");
+  
+    const storedBlogs = storageService.retrieve("blogs");
+    if (storedBlogs) {
+        userBlogs = storedBlogs[loggedInUser.email] || [];
+        const blogCardsElement = document.getElementById("blog-cards");
+        // const homeBlogsEle = document.getElementById("homeblog-cards");
+
+        let cardsTemplate = '';
+        const maxTitleLength = 20; 
+        const maxContentLength = 40; 
+  
+        userBlogs.forEach((blog, index) => {
+            // Truncate the title if it exceeds the maximum length
+            const truncatedTitle = blog.title.length > maxTitleLength ? blog.title.slice(0, maxTitleLength) + "..." : blog.title;
+                let contents = "";
+            blog.content.forEach(content => {
+            // Truncate the content if it exceeds the maximum length (50 characters)
+            const truncatedContent = content.length > maxContentLength ? content.slice(0, maxContentLength) + "..." : content;
+            contents += truncatedContent;
+            });
+
+            // Truncate the entire 'contents' string if it exceeds the maximum length (50 characters)
+            contents = contents.length > maxContentLength ? contents.slice(0, maxContentLength) + "..." : contents;
+
+            // Insert the truncated 'contents' string into the card template
+            cardsTemplate += `
+            <div class="card me-1" style="width: 14rem; height: 20rem; margin: 0.5rem ">
+                <img src="../../assets/images/blog-image.jpeg" class="card-img-top" alt="...">
+                <div class="card-body" style="position:relative">
+                    <h6 class="card-title">${truncatedTitle}</h6>
+                    <p style="font-size: 60%; font-weight:bold">${blog.date_created}</p>
+                    <p style="font-size: 82%" class="card-text">${contents}</p>
+                    <a class="btn btn-outline-primary btn-sm" style="position:absolute; bottom: 10px; right:4.6rem" href="./view-blog.html?email=${loggedInUser.email}&index=${index}">view blog</a>
+                </div>
+            </div>
+            `;
+
+        })    
+      blogCardsElement.innerHTML = cardsTemplate;
+      
+    }
+}
+
+  
+
+  
+
 function addBlogParagraph (e) {
     e.preventDefault();
     const value = textAreaElement.value;
@@ -40,6 +92,7 @@ function createBlog (e) {
         content: Object.values(blogs),
         date_created: new Date().toDateString()
     }
+   
 
     const storedBlogs = storageService.retrieve("blogs") || {};
     if (storedBlogs[loggedInUser.email]) storedBlogs[loggedInUser.email].push(blog)
@@ -48,7 +101,6 @@ function createBlog (e) {
     storageService.save("blogs", storedBlogs);
 
 }
-    
 
 function displayParagraphs () {
     
@@ -58,8 +110,8 @@ function displayParagraphs () {
         <div class = "blog-paragraph row">
             <div id = ${id}-value class="ps-3 col-md-8 col-10"> ${blogs[id]}</div>
             <div id = ${id} class = "col-md-4 col-2 text-end">
-                <span class= "edit-btn material-symbols-outlined">edit</span>
-                <span class= "delete-btn material-symbols-outlined">delete</span>
+                <span class= "edit-btn material-symbols-outlined" style = "cursor: pointer">edit</span>
+                <span class= "delete-btn material-symbols-outlined" style = "cursor: pointer">delete</span>
             </div>
         </div>
         `
@@ -95,30 +147,4 @@ function deleteParagraph (e) {
     displayParagraphs();
 }
 
-// setting maximum length for blog content chracters displayed on blog card 
 
-const paragraphs = document.querySelectorAll('.card-text');
-
-for (let i = 0; i < paragraphs.length; i++) {
-  const paragraph = paragraphs[i];
-  const text = paragraph.textContent.trim();
-
-  if (text.length > 25) {
-    const truncatedText = text.slice(0, 25) + '...';
-    paragraph.textContent = truncatedText;
-  }
-}
-
-// setting maximum length for blog title chracters displayed on blog card 
-
-const titles = document.querySelectorAll('.card-title');
-
-for (let i = 0; i < titles.length; i++) {
-  const title = titles[i];
-  const text = title.textContent.trim();
-
-  if (text.length > 16) {
-    const truncatedText = text.slice(0, 16) + '...';
-    title.textContent = truncatedText;
-  }
-}

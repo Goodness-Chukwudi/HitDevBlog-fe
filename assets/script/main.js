@@ -36,3 +36,5 @@ function authGuard() {
     const loggedInUser = localStorage.getItem("logged-in-user");
     if (!loggedInUser)   window.location.replace("http://127.0.0.1:5501/pages/login.html");
 }
+
+
