@@ -16,35 +16,59 @@ let blogs = {};
 let paragraphCount = 0;
 const textAreaElement = document.getElementById("exampleFormControlTextarea1");
 
-function displayBlogs (e) {
+
+function displayBlogs(e) {
     const storageService = new StorageService();
     const loggedInUser = storageService.retrieve("logged-in-user");
-
+  
     const storedBlogs = storageService.retrieve("blogs");
     if (storedBlogs) {
         userBlogs = storedBlogs[loggedInUser.email] || [];
         const blogCardsElement = document.getElementById("blog-cards");
-    
+        
+
+        
+
         let cardsTemplate = '';
+        const maxTitleLength = 20; 
+        const maxContentLength = 40; 
+  
         userBlogs.forEach((blog, index) => {
-            let contents = "";
+            // Truncate the title if it exceeds the maximum length
+            const truncatedTitle = blog.title.length > maxTitleLength ? blog.title.slice(0, maxTitleLength) + "..." : blog.title;
+                let contents = "";
             blog.content.forEach(content => {
-                contents += `<p class="card-text">${content}</p>`
-            })
+            // Truncate the content if it exceeds the maximum length (50 characters)
+            const truncatedContent = content.length > maxContentLength ? content.slice(0, maxContentLength) + "..." : content;
+            contents += truncatedContent;
+            });
+
+            // Truncate the entire 'contents' string if it exceeds the maximum length (50 characters)
+            contents = contents.length > maxContentLength ? contents.slice(0, maxContentLength) + "..." : contents;
+
+            // Insert the truncated 'contents' string into the card template
             cardsTemplate += `
-            <div class="card me-1" style="width: 10rem; height: 15rem;">
+            <div class="card me-1" style="width: 14rem; height: 20rem; margin: 0.5rem ">
                 <img src="../../assets/images/blog-image.jpeg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h6 class="card-title">${blog.title} <span style= "font-size: 60%" >${blog.date_created}</span></h6>
-                    ${contents}
-                    <a class=" btn btn-outline-primary btn-sm" href="./view-blog.html?email=${loggedInUser.email}&index=${index}">view blog</a>
+                <div class="card-body" style="position:relative">
+                    <h6 class="card-title">${truncatedTitle}</h6>
+                    <p style="font-size: 60%; font-weight:bold">${blog.date_created}</p>
+                    <p style="font-size: 82%" class="card-text">${contents}</p>
+                    <a class="btn btn-outline-primary btn-sm" style="position:absolute; bottom: 10px; right:4.6rem" href="./view-blog.html?email=${loggedInUser.email}&index=${index}">view blog</a>
                 </div>
             </div>
-            `
-        })
-        blogCardsElement.innerHTML = cardsTemplate;
+            `;
+
+        })    
+      blogCardsElement.innerHTML = cardsTemplate;
+    
+      
     }
 }
+
+  
+
+  
 
 function addBlogParagraph (e) {
     e.preventDefault();
@@ -71,6 +95,7 @@ function createBlog (e) {
         content: Object.values(blogs),
         date_created: new Date().toDateString()
     }
+   
 
     const storedBlogs = storageService.retrieve("blogs") || {};
     if (storedBlogs[loggedInUser.email]) storedBlogs[loggedInUser.email].push(blog)
@@ -88,8 +113,8 @@ function displayParagraphs () {
         <div class = "blog-paragraph row">
             <div id = ${id}-value class="ps-3 col-md-8 col-10"> ${blogs[id]}</div>
             <div id = ${id} class = "col-md-4 col-2 text-end">
-                <span class= "edit-btn material-symbols-outlined">edit</span>
-                <span class= "delete-btn material-symbols-outlined">delete</span>
+                <span class= "edit-btn material-symbols-outlined" style = "cursor: pointer">edit</span>
+                <span class= "delete-btn material-symbols-outlined" style = "cursor: pointer">delete</span>
             </div>
         </div>
         `
@@ -124,3 +149,5 @@ function deleteParagraph (e) {
     delete blogs[id];
     displayParagraphs();
 }
+
+
