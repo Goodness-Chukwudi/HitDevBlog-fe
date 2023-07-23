@@ -16,3 +16,5 @@ class ShowAlert {
         body[0].append(errorDiv);
     }
 }
+
+//Code reusability and modularization

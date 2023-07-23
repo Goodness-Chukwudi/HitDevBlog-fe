@@ -19,15 +19,24 @@ function displayBlogs(e) {
         let cardsTemplate = '';
         const maxTitleLength = 20; 
         const maxContentLength = 40; 
-  
+
         userBlogs.forEach((blog, index) => {
             // Truncate the title if it exceeds the maximum length
             const truncatedTitle = blog.title.length > maxTitleLength ? blog.title.slice(0, maxTitleLength) + "..." : blog.title;
-                let contents = "";
-            blog.content.forEach(content => {
+                let contents = ["arinze", "amarachi", "aki"];
+                let contentLength = 25;
+
+            blog.content.forEach((content, i) => {
             // Truncate the content if it exceeds the maximum length (50 characters)
             const truncatedContent = content.length > maxContentLength ? content.slice(0, maxContentLength) + "..." : content;
             contents += truncatedContent;
+
+                //if paragraph[i]'s length + contentLength == maxContentLength and is the last paragraph (i+1 < blog.content.length) maxContentLength then truncate and break;
+                //if paragraph[i]'s length + contentLength  > maxContentLength then truncate and disregard other paragraphs and break;
+                //else add the paragraph to contents array, increment contentLength with the paragraph length and continue the loop;
+
+                //note, you are to add only the required number of characters from the current paragraph to the contents array
+                
             });
 
             // Truncate the entire 'contents' string if it exceeds the maximum length (50 characters)
