@@ -26,7 +26,7 @@ function fetchBlog() {
     let contents = "";
     selectBlog.content.forEach(content => {
         contents += `<p class="card-text">${content}</p>`
-    })
+    });
 
     document.getElementById("title").innerHTML = selectBlog.title;
     document.getElementById("author").innerHTML = selectBlog.user;
