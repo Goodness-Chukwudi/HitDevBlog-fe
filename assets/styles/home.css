@@ -4,6 +4,58 @@
   height: 300px;
 }
 
+
+
+
+/*=========== Nav-Bar ========= */
+
+.navbar-brand{
+  font-weight: bold;
+}
+
+.navbar-brand span{
+  color: rgb(255, 0, 51);
+}
+
+#log-out{
+  background-color: #eee;
+}
+
+#log-out:hover{
+ border:1px solid #a79c9c ;
+}
+
+#navbarSupportedContent a:hover {
+  background-color: #eee;
+}
+
+#active1{
+  border-bottom: 2px solid #7b7b7c;
+  border-bottom-width: 3px;
+  
+}
+
+
+
+
+#logged-in-user{
+  color: #7c7b7b;
+  margin-left: 35rem;
+  font-weight: 500;
+  
+}
+
+
+
+
+/* ========== banner section ======== */
+
+
+.blog-page-main{
+  margin-top: 50px;
+}
+
+
 .main-footer {
   height: 100px;
 }
