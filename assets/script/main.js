@@ -16,7 +16,7 @@ function checkLoggedInUser () {
     loggedInUser = JSON.parse(user);
 
     if (loggedInUser) {
-        document.getElementById("log-in").setAttribute("style", "display: none;");
+        // document.getElementById("log-in").setAttribute("style", "display: none;");
         document.getElementById("log-out").setAttribute("style", "display: inline;");
         document.getElementById("logged-in-user").innerHTML = `Hi ${loggedInUser.name}`;
     } else {

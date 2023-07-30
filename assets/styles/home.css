@@ -32,6 +32,7 @@
 #active1{
   border-bottom: 2px solid #7b7b7c;
   border-bottom-width: 3px;
+  background-color: rgb(247, 235, 219);
   
 }
 
@@ -40,7 +41,6 @@
 
 #logged-in-user{
   color: #7c7b7b;
-  margin-left: 35rem;
   font-weight: 500;
   
 }
@@ -94,3 +94,5 @@
   height: 400px;
   background-color: rgb(119, 89, 85);
 }
+
+
