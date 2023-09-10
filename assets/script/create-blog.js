@@ -80,8 +80,6 @@ function displayBlogs(e) {
                     <h6 class="card-title">${truncatedTitle}</h6>
                     <p style="font-size: 60%; font-weight:bold">${blog.date_created}</p>
                     ${truncatedContentParagraphs}
-                    <span class= "edit-btn2 material-symbols-outlined" data-index="${index}" id="card-edit-btn" style = "cursor: pointer; position:absolute; bottom: 44px; right:7.05rem; color: rgb(102, 172, 230); font-size:140%">edit</span>
-                    <span class= "delete-btn2 material-symbols-outlined" data-index="${index}" id= "card-del-btn" style = "cursor: pointer; position:absolute; bottom: 44px; right:5.7rem; color:rgb(255, 89, 122); font-size:140%">delete</span>
                     <a class="btn btn-outline-primary btn-sm" style="position:absolute; bottom: 10px; right:4.6rem" href="./view-blog.html?email=${loggedInUser.email}&index=${index}">view blog</a>
                 </div>
             </div>
@@ -90,9 +88,7 @@ function displayBlogs(e) {
         })    
         blogCardsElement.innerHTML = cardsTemplate;
 
-        const editButtons = document.querySelectorAll(".edit-btn2");
-        const deleteButtons = document.querySelectorAll(".delete-btn2");
-    
+        
         editButtons.forEach((editButton) => {
             editButton.addEventListener("click", editBlog);
         });
@@ -105,39 +101,39 @@ function displayBlogs(e) {
     }
 
 
-    function editBlog(event) {
-        const index = event.target.dataset.index;
+    // function editBlog(event) {
+    //     const index = event.target.dataset.index;
     
-        if (userBlogs[index]) {
-            const blog = userBlogs[index];
+    //     if (userBlogs[index]) {
+    //         const blog = userBlogs[index];
     
-            // Populate the blog creation form with the content of the selected blog
-            document.getElementById("exampleFormControlInput1").value = blog.title;
-            textAreaElement.value = blog.content.join("\n");
+    //         // Populate the blog creation form with the content of the selected blog
+    //         document.getElementById("exampleFormControlInput1").value = blog.title;
+    //         textAreaElement.value = blog.content.join("\n");
     
-            // Set the update flag and editId to the index of the blog being edited
-            isUpdate = true;
-            editId = index;
-        } else {
-            // Handle the case when the blog object at the given index is undefined
-            alert(`Blog not found `);
-        }
-    }
+    //         // Set the update flag and editId to the index of the blog being edited
+    //         isUpdate = true;
+    //         editId = index;
+    //     } else {
+    //         // Handle the case when the blog object at the given index is undefined
+    //         alert(`Blog not found `);
+    //     }
+    // }
     
-    function deleteBlog(e) {
-        const id = e.target.dataset.index;
-        userBlogs.splice(id, 1);
+    // function deleteBlog(e) {
+    //     const id = e.target.dataset.index;
+    //     userBlogs.splice(id, 1);
         
-        // Update the local storage with the modified userBlogs array
-        const storageService = new StorageService();
-        const loggedInUser = storageService.retrieve("logged-in-user");
-        const storedBlogs = storageService.retrieve("blogs") || {};
-        storedBlogs[loggedInUser.email] = userBlogs;
-        storageService.save("blogs", storedBlogs);
+    //     // Update the local storage with the modified userBlogs array
+    //     const storageService = new StorageService();
+    //     const loggedInUser = storageService.retrieve("logged-in-user");
+    //     const storedBlogs = storageService.retrieve("blogs") || {};
+    //     storedBlogs[loggedInUser.email] = userBlogs;
+    //     storageService.save("blogs", storedBlogs);
     
-        // Display the updated blogs after deleting
-        displayBlogs();
-    }
+    //     // Display the updated blogs after deleting
+    //     displayBlogs();
+    // }
     
 
 }

@@ -1,0 +1,12 @@
+
+#view-blog-container {
+    border: 1px solid #a8a5a5;
+    width: 80%;
+    min-height: 100vh;
+    padding: 2.8rem;
+    box-shadow: inset 5px -5px rgb(240, 233, 233);
+    font-size: larger;
+    line-height: 2rem;
+    overflow-wrap: break-word;
+}
+

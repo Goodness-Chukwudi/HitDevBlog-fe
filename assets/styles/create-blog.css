@@ -7,3 +7,38 @@
 #blog-content {
     max-height: 10rem;
 }
+
+#tooltip{
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    background-color: #0882fc;
+    color:white;
+    white-space: nowrap;
+    padding: 10px 5px;
+    border-radius: 7px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity  0.5s ease-in;
+    width: 110%; 
+    height: 30.5%;
+    white-space: normal;
+    margin-top: -1rem;
+}
+
+#tooltip::before{
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    border: 15px solid;
+    border-color: #0882fc #0000 #0000 #0000;
+}
+
+#blog-card:hover #tooltip{
+    top: -21%;
+    visibility: visible;
+    opacity: 1;
+}

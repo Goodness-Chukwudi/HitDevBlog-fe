@@ -12,7 +12,7 @@ function createUser (e) {
     e.preventDefault();
     
     const name = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    const password = document.getElementById("password-signUp").value;
     const email = document.getElementById("email").value;
     
     const user = {
