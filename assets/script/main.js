@@ -1,9 +1,11 @@
 let loggedInUser = null;
 
+
 document.addEventListener("DOMContentLoaded", () => {
     authGuard()
     addEventListeners();
     checkLoggedInUser();
+     displayBlogs()  
 });
 
 function addEventListeners () {

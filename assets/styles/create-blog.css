@@ -7,3 +7,48 @@
 #blog-content {
     max-height: 10rem;
 }
+
+
+.card {
+    max-width: 400px; /* Set a maximum width for the card */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;  /*Ensure content inside the card doesn't overflow*/
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    position: relative;
+  }
+  
+  /* Styles for the card image */
+  .card img {
+    width: 100%;
+    height: auto;
+    display: block; /* Ensures the image doesn't create any extra space */
+  }
+  
+  /* Styles for the card content */
+  .card-body {
+    padding: 16px;
+    margin-bottom: 3px;
+  }
+  
+  /* Styles for the title and paragraph inside the card */
+  .card-title {
+    margin-top: 0;
+    font-size: 1rem;
+  }
+  
+  .card-text {
+    font-size: 7%;
+  }
+  
+  /* Styles for the button inside the card */
+  .card-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 10px;
+    height: 2rem;
+    right: 2.5rem;
+  }
+  
